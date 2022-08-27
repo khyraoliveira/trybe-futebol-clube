@@ -10,38 +10,41 @@ module.exports = {
 				autoIncrement: true,
 			},
       homeTeam: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
 				field: 'home_team', // interessante usar o field para renomear a coluna
 				references: { // informa que é uma foreing key
-					model: 'TeamModel', // qual tabela está referenciada
+					model: 'teams', // qual tabela está referenciada
 					key: 'id', // qual coluna será usada como foreign key
 				}
       },
       homeTeamGoals: {
-        type: Sequelize.NUMBER,
-        allowNull: true
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        field: 'home_team_goals',
       },
 			awayTeam: {
-				type: Sequelize.NUMBER,
+				type: Sequelize.INTEGER,
 				allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
 				field: 'away_team', // interessante usar o field para renomear a coluna
 				references: { // informa que é uma foreing key
-					model: 'TeamModel', // qual tabela está referenciada
+					model: 'teams', // qual tabela está referenciada
 					key: 'id', // qual coluna será usada como foreign key
 				}
 			},
 			awayTeamGoals: {
-				type: Sequelize.NUMBER,
+				type: Sequelize.INTEGER,
 				allowNull: false,
+        field: 'away_team_goals',
 			},
       inProgress: {
 				type: Sequelize.BOOLEAN,
 				allowNull: false,
+        field: 'in_progress',
 			},
 		},);
   },
