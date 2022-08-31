@@ -28,4 +28,15 @@ export default class UserServices {
     const token = JwtService.createToken(user.email, user.id);
     return token;
   }
+
+  static async validate(authorization:string): Promise<string> {
+    const { id, email } = JwtService.validateToken(authorization);
+    const idAutho = await UserModel.findByPk(id);
+    if (!idAutho || idAutho.email !== email) {
+      const error = new Error('Incorrect email or password');
+      error.name = 'Unauthorized';
+      throw error;
+    }
+    return idAutho.role;
+  }
 }

@@ -9,4 +9,17 @@ export default class UserController {
 
     response.status(200).json({ token });
   }
+
+  static async validate(require: Request, response: Response) {
+    const { authorization } = require.headers;
+
+    if (!authorization) {
+      const error = new Error('Incorrect email or password');
+      error.name = 'Unauthorized';
+      throw error;
+    }
+    const role = await UserService.validate(authorization);
+
+    response.status(200).json({ role });
+  }
 }
