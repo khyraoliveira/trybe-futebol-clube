@@ -1,15 +1,16 @@
 import * as bcrypt from 'bcryptjs';
+import validationLogin from '../middleware/validationLogin.middleware';
 import UserModel from '../database/models/user.model';
 import JwtService from './jwt.services';
 
 export default class UserServices {
   static async login(email:string, password:string): Promise<string> {
-    console.log(email, 'aquiiiiiii');
-    if (!email) {
+    if (!email || !password) {
       const error = new Error('All fields must be filled');
       error.name = 'ValidationError';
       throw error;
     }
+    validationLogin.email(email);
     const user = await UserModel.findOne({
       // vai na tabela procurar o que está sendo requisitado:
       // trará tudo que está dentro de User c/ o email referido já 'E'xiste no body.
