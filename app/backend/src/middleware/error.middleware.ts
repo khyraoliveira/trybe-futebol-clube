@@ -1,11 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler } from 'express';
 import 'express-async-errors';
 
-const errorMiddleware = (err: Error, _req: Request, res: Response, next: NextFunction) => {
-  const { name, message, details } = err as any;
+const errorMiddleware:ErrorRequestHandler = (err, _req, res, _next) => {
+  const { name, message } = err;
   switch (name) {
     case 'ValidationError':
-      return res.status(400).json({ message: details ? details[0].message : message });
+      return res.status(400).json({ message });
       break;
     case 'Unauthorized':
       return res.status(401).json({ message });
@@ -16,6 +16,5 @@ const errorMiddleware = (err: Error, _req: Request, res: Response, next: NextFun
     default:
       return res.sendStatus(500).json({ message });
   }
-  next();
 };
 export default errorMiddleware;

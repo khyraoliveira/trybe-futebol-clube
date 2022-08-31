@@ -1,8 +1,8 @@
 import * as express from 'express';
 import * as cors from 'cors';
+import 'express-async-errors';
 import loginRouter from './routers/login.router';
 import errorMiddleware from './middleware/error.middleware';
-import 'express-async-errors';
 
 class App {
   public app: express.Express;
