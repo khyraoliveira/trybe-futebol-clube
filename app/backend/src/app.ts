@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import loginRouter from './routers/login.router';
 import errorMiddleware from './middleware/error.middleware';
 import 'express-async-errors';
@@ -23,6 +24,7 @@ class App {
       next();
     };
 
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(accessControl);
     this.app.use('/login', loginRouter);

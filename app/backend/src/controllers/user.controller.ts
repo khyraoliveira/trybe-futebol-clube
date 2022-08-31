@@ -7,6 +7,6 @@ export default class UserController {
 
     const token = await UserService.login(email, password);
 
-    response.status(220).json({ token });
+    response.status(200).json({ token });
   }
 }

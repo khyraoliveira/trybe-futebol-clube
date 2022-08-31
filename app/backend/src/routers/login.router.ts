@@ -5,6 +5,6 @@ import UserController from '../controllers/user.controller';
 const loginRouter = Router();
 
 // ROTA DO LOGIN
-loginRouter.post('/', UserController.login);
+loginRouter.post('/', (require, response) => UserController.login(require, response));
 
 export default loginRouter;
