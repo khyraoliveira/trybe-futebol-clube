@@ -8,4 +8,11 @@ export default class TeamServices {
     // vai na tabela procurar o que está sendo requisitado:
     // trará tudo que está dentro de Team.
   }
+
+  static async teamId(id: string): Promise<TeamInterface | null> {
+    const teamByID = await TeamModel.findByPk(id);
+    return teamByID;
+    // vai na tabela procurar o que está sendo requisitado:
+    // trará o ID que está dentro do Team.
+  }
 }

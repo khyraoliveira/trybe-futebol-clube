@@ -7,4 +7,11 @@ export default class TeamController {
 
     response.status(200).json(teams);
   }
+
+  static async teamId(require: Request, response: Response) {
+    const { id } = require.params;
+    const teamId = await TeamService.teamId(id);
+
+    response.status(200).json(teamId);
+  }
 }
