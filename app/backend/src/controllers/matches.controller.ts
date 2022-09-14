@@ -15,4 +15,11 @@ export default class MatchesController {
 
     response.status(201).json(matches);
   }
+
+  static async matchesPatch(require: Request, response: Response) {
+    const { id } = require.params;
+    await MatchesService.matchPatch(id);
+
+    response.status(200).json({ message: 'Finished' });
+  }
 }

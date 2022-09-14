@@ -21,4 +21,8 @@ export default class TeamServices {
       .create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true });
     return matchesSave;
   }
+
+  static async matchPatch(id:string): Promise<void> {
+    await MatchesModel.update({ inProgress: false }, { where: { id } });
+  }
 }
