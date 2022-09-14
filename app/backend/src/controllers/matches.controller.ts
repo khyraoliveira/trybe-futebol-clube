@@ -8,14 +8,16 @@ export default class MatchesController {
     response.status(200).json(matches);
   }
 
+  // REQ23
   static async matchesSave(require: Request, response: Response) {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = require.body;
     const matches = await MatchesService
-      .matchesSave(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals);
+      .MSave(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals);
 
     response.status(201).json(matches);
   }
 
+  // REQ24
   static async matchesPatch(require: Request, response: Response) {
     const { id } = require.params;
     await MatchesService.matchPatch(id);
