@@ -10,4 +10,15 @@ export default class TeamServices {
     // vai na tabela procurar o que está sendo requisitado:
     // trará tudo que está dentro de Matches.
   }
+
+  static async matchesSave(
+    homeTeam:number,
+    awayTeam:number,
+    homeTeamGoals:number,
+    awayTeamGoals:number,
+  ): Promise<MatchesInterface> {
+    const matchesSave = await MatchesModel
+      .create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true });
+    return matchesSave;
+  }
 }

@@ -7,4 +7,12 @@ export default class MatchesController {
 
     response.status(200).json(matches);
   }
+
+  static async matchesSave(require: Request, response: Response) {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = require.body;
+    const matches = await MatchesService
+      .matchesSave(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals);
+
+    response.status(201).json(matches);
+  }
 }

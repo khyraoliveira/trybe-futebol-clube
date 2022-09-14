@@ -6,5 +6,6 @@ const matchesRouter = Router();
 
 // ROTA DO MATCH
 matchesRouter.get('/', (require, response) => MatchesController.matches(require, response));
+matchesRouter.post('/', (require, response) => MatchesController.matchesSave(require, response));
 
 export default matchesRouter;
