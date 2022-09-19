@@ -68,5 +68,27 @@ describe('Teste de Login', () => {
     expect(response.body.message).to.be.equal('All fields must be filled');
   })
 
+  // COBRINDO 63.33% DAS LINHAS:
+  describe('Login', () => {
+    beforeEach(() => {
+      sinon.stub(UserModel, 'findOne').resolves(null);
+    })
+    afterEach(() => {
+      sinon.restore();
+    })
+    it('Retorna 401 - Endpoint do /login SEM permitir o acesso COM um email inválido no FRONT - Back-end', async () => {
+      const response = await chai.request(app)
+        .post('/login')
+        .send(mockados.loginMock);
+      expect(response.status).to.be.equal(401)
+    })
+    it('Retorna mensagem de erro - Endpoint do /login SEM permitir o acesso COM um email inválido no FRONT - Back-end', async () => {
+      const response = await chai.request(app)
+        .post('/login')
+        .send(mockados.loginMock);
+      expect(response.body.message).to.be.equal('Incorrect email or password');
+    })
+  })
+
 });
 
