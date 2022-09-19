@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import MatchesService from '../services/matches.services';
+import JwtService from '../services/jwt.services';
 
 export default class MatchesController {
   static async matches(require: Request, response: Response) {
@@ -11,6 +12,12 @@ export default class MatchesController {
   // REQ23
   static async matchesSave(require: Request, response: Response) {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = require.body;
+    // REQ 27
+    const { authorization } = require.headers;
+    if (!authorization) {
+      throw new Error();
+    }
+    JwtService.validateToken(authorization);
     const matches = await MatchesService
       .MSave(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals);
 
