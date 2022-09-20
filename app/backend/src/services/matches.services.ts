@@ -3,6 +3,7 @@ import MatchesModel from '../database/models/matches.model';
 import TeamModel from '../database/models/team.model';
 
 export default class TeamServices {
+  static updateMatches: any;
   static async matches(): Promise<MatchesInterface[]> {
     const matches = await MatchesModel.findAll({ include: [{
       model: TeamModel, as: 'teamHome' }, { model: TeamModel, as: 'teamAway' }] });
@@ -38,4 +39,20 @@ export default class TeamServices {
   static async matchPatch(id:string): Promise<void> {
     await MatchesModel.update({ inProgress: false }, { where: { id } });
   }
+
+  // REQ 28
+  public updateMatches = async (
+    id: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ) => {
+    const match = await MatchesModel.findByPk(id);
+    if (!match) {
+      throw new Error('There is no match with such id!');
+    }
+    await MatchesModel.update({
+      homeTeamGoals,
+      awayTeamGoals,
+    }, { where: { id } });
+  };
 }
