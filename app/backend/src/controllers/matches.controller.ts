@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import MatchesService from '../services/matches.services';
-import UserServices from '../services/user.services';
+// import UserServices from '../services/user.services';
 import JwtService from '../services/jwt.services';
 
 export default class MatchesController {
@@ -34,12 +34,12 @@ export default class MatchesController {
   }
 
   // REQ 28
-  public updateMatches = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { authorization: token } = req.headers as { authorization: string };
-    const { homeTeamGoals, awayTeamGoals } = req.body;
-    await UserServices.validate(token);
+  static updateMatches = async (require: Request, response: Response) => {
+    const { id } = require.params;
+    // const { authorization: token } = require.headers as { authorization: string };
+    const { homeTeamGoals, awayTeamGoals } = require.body;
+    // await UserServices.validate(token);
     await MatchesService.updateMatches(Number(id), homeTeamGoals, awayTeamGoals);
-    res.status(200).json({ message: 'Updated!' });
+    response.status(200).json({ message: 'The Score have been updated' });
   };
 }

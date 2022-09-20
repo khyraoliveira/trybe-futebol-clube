@@ -3,7 +3,7 @@ import MatchesModel from '../database/models/matches.model';
 import TeamModel from '../database/models/team.model';
 
 export default class TeamServices {
-  static updateMatches: any;
+  // static updateMatches: any;
   static async matches(): Promise<MatchesInterface[]> {
     const matches = await MatchesModel.findAll({ include: [{
       model: TeamModel, as: 'teamHome' }, { model: TeamModel, as: 'teamAway' }] });
@@ -41,7 +41,7 @@ export default class TeamServices {
   }
 
   // REQ 28
-  public updateMatches = async (
+  static updateMatches = async (
     id: number,
     homeTeamGoals: number,
     awayTeamGoals: number,

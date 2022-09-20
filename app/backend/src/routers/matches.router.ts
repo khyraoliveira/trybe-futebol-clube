@@ -11,6 +11,6 @@ matchesRouter
   .patch('/:id/finish', (require, response) => MatchesController.matchesPatch(require, response));
 // REQ 28
 matchesRouter.patch('/:id', (require, response) => MatchesController
-  .matchesPatch(require, response));
+  .updateMatches(require, response));
 
 export default matchesRouter;
