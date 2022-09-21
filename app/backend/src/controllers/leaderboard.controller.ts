@@ -14,4 +14,10 @@ export default class LeaderboardController {
     const retorno = await LeaderboardService.away();
     response.status(200).json(retorno);
   }
+
+  // REQ 33
+  static async geral(request: Request, response: Response): Promise<void> {
+    const retorno = await LeaderboardService.home();
+    response.status(200).json(retorno);
+  }
 }

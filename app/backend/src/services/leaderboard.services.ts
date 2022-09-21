@@ -15,6 +15,7 @@ export default class LeaderboardServices {
     return finalStatsSort;
   }
 
+  //  REQ 29
   static matchesFinished(matches: Match[]) {
     const filtrado = matches.filter((match) => match.inProgress === false);
 
@@ -191,6 +192,41 @@ export default class LeaderboardServices {
     }
     return 0;
   }
-}
 
-// ({ name, totalPoints, totalGames, totalVictories, totalDraws, totalLosses, goalsFavor, goalsOwn, goalsBalance, efficiency, inProgress: false });
+  // REQ 33
+  static async geral() {
+    const finalStatsHome = await this.home();
+    const finalStatsAway = await this.away();
+    finalStatsHome.sort((a: LeaderboardI, b: LeaderboardI) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
+    finalStatsAway.sort((a: LeaderboardI, b: LeaderboardI) => {
+      if (a.name > b.name) return 2;
+      if (a.name < b.name) return -2;
+      return 0;
+    });
+    const finallySoma = this.soma(finalStatsHome, finalStatsAway);
+    return this.sortStats(finallySoma);
+  }
+
+  static soma(finalStatsHome: LeaderboardI[], finalStatsAway: LeaderboardI[]) {
+    const finalSome: LeaderboardI[] = [];
+    finalStatsHome.forEach((finalStatsHome2, index) => {
+      const empty = this.makeEmptyObject();
+      empty.name = finalStatsHome2.name;
+      empty.totalPoints = finalStatsHome2.totalPoints + finalStatsAway[index].totalPoints;
+      empty.totalGames = finalStatsHome2.totalGames + finalStatsAway[index].totalGames;
+      empty.totalVictories = finalStatsHome2.totalVictories + finalStatsAway[index].totalVictories;
+      empty.totalDraws = finalStatsHome2.totalDraws + finalStatsAway[index].totalDraws;
+      empty.totalLosses = finalStatsHome2.totalLosses + finalStatsAway[index].totalLosses;
+      empty.goalsFavor = finalStatsHome2.goalsFavor + finalStatsAway[index].goalsFavor;
+      empty.goalsOwn = finalStatsHome2.goalsOwn + finalStatsAway[index].goalsOwn;
+      empty.goalsBalance = finalStatsHome2.goalsBalance + finalStatsAway[index].goalsBalance;
+      empty.efficiency = +((empty.totalPoints / (empty.totalGames * 3)) * 100).toFixed(2);
+      finalSome.push(empty);
+    });
+    return finalSome;
+  }
+}
