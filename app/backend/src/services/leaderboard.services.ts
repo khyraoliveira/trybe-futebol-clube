@@ -207,7 +207,7 @@ export default class LeaderboardServices {
       if (a.name < b.name) return -2;
       return 0;
     });
-    console.log('ALOOOOOOO', finalStatsHome, finalStatsAway);
+    // console.log('ALOOOOOOO', finalStatsHome, finalStatsAway);
     const finallySoma = this.soma(finalStatsHome, finalStatsAway);
     return this.sortStats(finallySoma);
   }
