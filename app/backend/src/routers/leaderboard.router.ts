@@ -8,5 +8,7 @@ const leaderboardRouter = Router();
 // REQ29 a requisição tipo 'GET' e o endpoint '/home'
 leaderboardRouter
   .get('/home', (require, response) => LeaderboardController.home(require, response));
+leaderboardRouter
+  .get('/away', (require, response) => LeaderboardController.away(require, response));
 
 export default leaderboardRouter;

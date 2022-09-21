@@ -115,5 +115,82 @@ export default class LeaderboardServices {
     });
     return finalStats;
   }
+
+  // REQ 31
+  static async away() {
+    const matches = await MatchesServices.matches();
+    const filtrar2 = this.matchesFinished(matches);
+    const matchesFilter = this.matchesAway(filtrar2);
+    const finalStats = this.awayLeadboarder(matchesFilter);
+    const finalStatsSort = this.sortStats(finalStats);
+    return finalStatsSort;
+  }
+
+  static matchesAway(matches: Match[]) {
+    const matchesFilter = [];
+    for (let index = 1; index < 17; index += 1) {
+      matchesFilter[index] = matches.filter((match) => match.awayTeam === index);
+    }
+    return matchesFilter;
+  }
+
+  static awayLeadboarder(matchesFilter: Match[][]): LeaderboardI[] {
+    const awayStats: LeaderboardI[] = [];
+    matchesFilter.forEach((matches) => {
+      awayStats.push(this.makeObject2(matches));
+    });
+    return awayStats;
+  }
+
+  static makeObject2(matches: Match[]): LeaderboardI {
+    const result = this.makeEmptyObject();
+    matches.forEach((match) => {
+      result.name = match.teamAway!.dataValues.teamName;
+      // console.log('alooooooo', match.teamHome!.dataValues.teamName);
+      result.totalPoints += this.totalPoint2(match); // nome da função que criarei
+      result.totalGames += +1;
+      result.totalVictories += this.countVictories2(match);
+      result.totalDraws += this.countDraws2(match);
+      result.totalLosses += this.countLosses2(match);
+      result.goalsFavor += match.awayTeamGoals;
+      result.goalsOwn += match.homeTeamGoals;
+      result.goalsBalance += (match.awayTeamGoals - match.homeTeamGoals);
+      result.efficiency = +((result.totalPoints / (result.totalGames * 3)) * 100).toFixed(2);
+    });
+    return result;
+    // P/(J*3)*100, onde: P: Total de Pontos; J: Total de Jogos.
+  }
+
+  static totalPoint2(match: Match) {
+    if (match.awayTeamGoals > match.homeTeamGoals) {
+      return 3;
+    }
+    if (match.awayTeamGoals === match.homeTeamGoals) {
+      return 1;
+    }
+    return 0;
+  }
+
+  static countVictories2(match: Match) {
+    if (match.awayTeamGoals > match.homeTeamGoals) {
+      return 1;
+    }
+    return 0;
+  }
+
+  static countDraws2(match: Match) {
+    if (match.awayTeamGoals === match.homeTeamGoals) {
+      return 1;
+    }
+    return 0;
+  }
+
+  static countLosses2(match: Match) {
+    if (match.awayTeamGoals < match.homeTeamGoals) {
+      return 1;
+    }
+    return 0;
+  }
 }
+
 // ({ name, totalPoints, totalGames, totalVictories, totalDraws, totalLosses, goalsFavor, goalsOwn, goalsBalance, efficiency, inProgress: false });

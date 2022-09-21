@@ -6,5 +6,5 @@ export default interface Match {
   awayTeamGoals: number,
   inProgress: boolean,
   teamHome?:{ dataValues: { teamName: string } },
-  teamAway?:{ teamName: string },
+  teamAway?:{ dataValues: { teamName: string } },
 }
