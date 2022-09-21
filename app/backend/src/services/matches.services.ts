@@ -2,8 +2,8 @@ import MatchesInterface from '../interfaces/match.interfaces';
 import MatchesModel from '../database/models/matches.model';
 import TeamModel from '../database/models/team.model';
 
-export default class TeamServices {
-  // static updateMatches: any;
+export default class MatchesServices {
+  // REQ 21
   static async matches(): Promise<MatchesInterface[]> {
     const matches = await MatchesModel.findAll({ include: [{
       model: TeamModel, as: 'teamHome' }, { model: TeamModel, as: 'teamAway' }] });
@@ -35,7 +35,7 @@ export default class TeamServices {
     return matchesSave;
   }
 
-  // REQ24
+  // REQ24 - partidas em andamento 'in progress'
   static async matchPatch(id:string): Promise<void> {
     await MatchesModel.update({ inProgress: false }, { where: { id } });
   }
