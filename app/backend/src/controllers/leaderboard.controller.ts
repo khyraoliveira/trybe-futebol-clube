@@ -17,7 +17,7 @@ export default class LeaderboardController {
 
   // REQ 33
   static async geral(request: Request, response: Response): Promise<void> {
-    const retorno = await LeaderboardService.home();
+    const retorno = await LeaderboardService.geral();
     response.status(200).json(retorno);
   }
 }
